@@ -1,0 +1,14 @@
+<div class="users-container" id="users-tweet">
+  <span> Stream with userid </span>
+  <span id="users-tweet-count"></span>
+  <div class="input-group">
+    <span class="input-group-addon">-></span>
+    <input type="text" class="form-control" ng-model="u_ctrl.users" placeholder="Input some user id to stream">
+    <button type="button" class="btn btn-default" ng-click="u_ctrl.start_stream()">
+      Start Stream
+    </button>
+    <button type="button" class="btn btn-default" ng-click="u_ctrl.stop_stream()">
+      Stop Stream
+    </button>
+  </div>
+</div>

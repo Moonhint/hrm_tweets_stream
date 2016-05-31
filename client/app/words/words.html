@@ -1,0 +1,14 @@
+<div class="words-container" id="words-tweet">
+  <span> Stream with words </span>
+  <span id="words-tweet-count"></span>
+  <div class="input-group">
+    <span class="input-group-addon">-></span>
+    <input type="text" class="form-control" ng-model="w_ctrl.words" placeholder="Input some word to stream">
+    <button type="button" class="btn btn-default" ng-click="w_ctrl.start_stream()">
+      Start Stream
+    </button>
+    <button type="button" class="btn btn-default" ng-click="w_ctrl.stop_stream()">
+      Stop Stream
+    </button>
+  </div>
+</div>

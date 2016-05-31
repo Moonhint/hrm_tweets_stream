@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>hrm tweets stream</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
+    <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-rc1/jquery.min.js'></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.3/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.0/angular-ui-router.min.js"></script>
+    <script type="text/javascript" src='/socket.io/socket.io.js'></script>
+
+
+    <link rel="stylesheet" href="app/app.css">
+
+  </head>
+  <body ng-app="hrmTweetStream" id="tweet-container">
+
+    <!-- [if lt IE 7]>
+      <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif] -->
+    <h1>Realtime Stream of Tweets</h1>
+
+    <div ui-view></div>
+
+    <script src="app/app.js"></script>
+    <script src="app/options/options.controller.js"></script>
+    <script src="app/words/words.controller.js"></script>
+    <script src="app/users/users.controller.js"></script>
+
+    <script type="text/javascript">
+        var socket = io();
+        var words_count = 0;
+        var users_count = 0;
+        socket.on('connection', function() {
+          console.info('Connected!');
+        });
+
+        socket.on('word_tweets', function(tweet) {
+          words_count++;
+          $('#words-tweet-count').html("Streamed " + words_count + " tweets");
+          var html = '<div class="row"><div class="col-md-6 col-md-offset-3 tweet"><a href="https://twitter.com/' +
+                    tweet.screen_name +
+                    '" target="_blank"><img src="' +
+                    tweet.user_profile_image +
+                    '" class="avatar pull-left"/></a><div class="names"><span class="full-name">' +
+                    tweet.name +
+                    ' </span><span class="username">@' +
+                    tweet.screen_name +
+                    '</span></div><div class="contents"><span class="text">' +
+                    tweet.text +
+                    '</span></div></div></div>';
+          $('#words-tweet').append(html);
+        });
+
+        socket.on('user_tweets', function(tweet) {
+          users_count++;
+          $('#users-tweet-count').html("Streamed " + users_count + " tweets");
+          var html = '<div class="row"><div class="col-md-6 col-md-offset-3 tweet"><a href="https://twitter.com/' +
+                    tweet.screen_name +
+                    '" target="_blank"><img src="' +
+                    tweet.user_profile_image +
+                    '" class="avatar pull-left"/></a><div class="names"><span class="full-name">' +
+                    tweet.name +
+                    ' </span><span class="username">@' +
+                    tweet.screen_name +
+                    '</span></div><div class="contents"><span class="text">' +
+                    tweet.text +
+                    '</span></div></div></div>';
+          $('#users-tweet').append(html);
+        });
+    </script>
+  </body>
+</html>
